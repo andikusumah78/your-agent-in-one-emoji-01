@@ -7,6 +7,8 @@ the hive one small job at a time — instantly readable, unmistakable,
 and not a robot or a smiley.
 
 Pure standard library, deterministic: same bytes on every run.
+The emoji is written as explicit UTF-8 bytes so the output cannot
+depend on the platform's default text encoding or newline handling.
 """
 
 import os
@@ -16,8 +18,8 @@ EMOJI = "\U0001F41D"  # 🐝 HONEYBEE
 
 def main() -> None:
     os.makedirs("/output", exist_ok=True)
-    with open("/output/entry.txt", "w", encoding="utf-8", newline="") as f:
-        f.write(EMOJI)
+    with open("/output/entry.txt", "wb") as f:
+        f.write(EMOJI.encode("utf-8"))
 
 
 if __name__ == "__main__":
